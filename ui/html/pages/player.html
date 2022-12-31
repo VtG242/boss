@@ -1,0 +1,12 @@
+{{ define "title" }}Player #{{.Player.PID}}{{ end }}
+
+{{ define "main" -}}
+  {{ with .Player -}}
+      <table>
+        <tr><td>ID:</td><td>{{ .PID }}</td></tr>
+        <tr><td>Jméno:</td><td>{{ .Firstname }}</td></tr>
+        <tr><td>Příjmení:</td><td>{{ .Surname }}</td></tr>
+        <tr><td>Datum narození:</td><td>{{ humanDate .Birthdate }}</td></tr>
+      </table>
+  {{- end }}
+{{- end }}

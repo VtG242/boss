@@ -1,0 +1,98 @@
+* {
+    box-sizing: border-box;
+    font-size: 16px;
+    font-family: "Cambria", system-ui;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    background: white;
+}
+
+body {
+    line-height: 1.5;
+    background-color: white;
+    color: black;
+    overflow-y: scroll;
+}
+
+h1 {
+    font-size: 18px;
+}
+
+a {
+    color: RoyalBlue;
+    text-decoration: none;
+}
+a:hover {
+    color: RoyalBlue;
+    text-decoration: underline;
+}
+
+header, nav, main, footer {
+    padding: 5px calc((100% - 1024px) / 6) 5px;
+}
+
+header {
+    background-image: url("/static/boss.png");
+    background-position: right;
+    background-repeat: no-repeat;
+    border-bottom: 1px solid #E4E5E7;
+    height: 84px;
+    overflow: auto;
+    padding-top: 15px;
+    text-align: center;
+}
+
+nav {
+    background: #F7F9FA;
+    border-bottom: 1px solid #E4E5E7;
+    color: RoyalBlue;
+    height: 40px;
+}
+
+nav a {
+    margin-right: 1.5em;
+    display: inline-block;
+
+}
+nav a.live {
+    color: blue;
+    cursor: default;
+}
+nav a.live:after {
+    content: '';
+    display: block;
+    position: relative;
+    left: calc(50% - 7px);
+    top: 4px;
+    width: 15px;
+    height: 15px;
+    background: #F7F9FA;
+    border-left: 1px solid #E4E5E7;
+    border-bottom: 1px solid #E4E5E7;
+    -moz-transform: rotate(45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+nav a.live:hover {
+    text-decoration: none;
+}
+
+main {
+    padding-top: 10px;
+    margin-top: 10px;
+    min-height: calc(100vh - 160px);
+    overflow: auto;
+}
+
+footer {
+    border-top: 1px solid #E4E5E7;
+    font-size: 14px;
+    height: 36px;
+    color: #6A6C6F;
+    text-align: center;
+}
+
