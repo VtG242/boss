@@ -11,12 +11,14 @@
   <body>
     <header>
       <h1>BOSS - Bowling Online Score System - Administrace</h1>
-      <a href="">[ menu 1 ]</a>
-      <a href="">[ menu 2 ]</a>
-      <a href="">[ menu 3 ]</a>
+      <a href="/players">Hráči </a>
+      <a href="/tournaments">Turnaje </a>
+      <a href="/reservations">Obsazovačky </a>
     </header>
     <nav>
-      {{template "menu" .}}
+      {{block "menu" .}}
+      <p>Default menu content</p>
+      {{end}}
     </nav>
     <main>
       {{block "main" .}}

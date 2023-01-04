@@ -1,0 +1,48 @@
+{{ define "title" }}Home{{ end }}
+{{ define "menu" -}}
+    <a href='/players/help' class="live">Nápověda</a>
+      <a href='/players'>Seznam hráčů</a>
+      <a href='/tournaments'>Nový hráč</a>
+{{- end }}
+{{ define "main" -}}
+<table>
+  <thead>
+  <tr>
+  <th>Method</th>
+  <th>Pattern</th>
+  <th>Handler</th>
+  <th>Action</th>
+  </tr>
+  </thead>
+  
+  <tbody>
+  <tr>
+  <td>GET</td>
+  <td><span>/player/view/:id</span></td>
+  <td>playerView</td>
+  <td>Zobrazení detailu specifického hráče</td>
+  </tr>
+  
+  <tr>
+  <td>GET</td>
+  <td>/player/add</td>
+  <td>playerCreate</td>
+  <td>Zobrazení HTML formuláře pro přidání nového hráče</td>
+  </tr>
+  
+  <tr>
+  <td>POST</td>
+  <td>/player/add</td>
+  <td>playerAddPost</td>
+  <td>Vloží nového hráče do databáze</td>
+  </tr>
+  
+  <tr>
+  <td>GET</td>
+  <td>/static/</td>
+  <td>http.FileServer</td>
+  <td>Poskytuje statické soubory (css,js)</td>
+  </tr>
+  </tbody>
+  </table>
+{{- end }}

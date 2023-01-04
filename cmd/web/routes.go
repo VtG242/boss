@@ -15,8 +15,9 @@ func (app *application) routes() http.Handler {
 
 	// Register the two new handler functions and corresponding URL patterns with
 	// the servemux, in exactly the same way that we did before.
-	mux.HandleFunc("/", app.help)
+	mux.HandleFunc("/", app.home)
 	mux.HandleFunc("/players", app.players)
+	mux.HandleFunc("/players/help", app.playersHelp)
 	mux.HandleFunc("/player/view", app.playerView)
 	mux.HandleFunc("/player/create", app.playerCreate)
 	mux.HandleFunc("/tournaments", app.tournaments)

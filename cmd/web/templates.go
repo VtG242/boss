@@ -54,10 +54,10 @@ func newTemplateCache() (map[string]*template.Template, error) {
 		}
 
 		// Call ParseGlob() on previously created ts to add any parts templates like menu
-		ts, err = ts.ParseGlob("./ui/html/parts/*.html")
-		if err != nil {
-			return nil, err
-		}
+		//ts, err = ts.ParseGlob("./ui/html/parts/*.html")
+		//if err != nil {
+		//	return nil, err
+		//}
 
 		// Finally add the page template
 		ts, err = ts.ParseFiles(page)

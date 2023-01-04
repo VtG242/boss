@@ -1,0 +1,26 @@
+{{ define "title" }}Home{{ end }}
+{{ define "menu" -}}
+    <a href='/players/help'>Nápověda</a>
+      <a href='/players' class="live">Seznam hráčů</a>
+      <a href='/tournaments'>Nový hráč</a>
+{{- end }}
+{{ define "main" -}}
+    {{ if .Players -}}
+      <table>
+      <tr>
+        <th>ID</th>
+        <th>Jméno</th>
+        <th>Příjmení</th>
+      </tr>
+      {{ range .Players -}}
+      <tr>  
+        <td><a href='/player/view?id={{.PID}}'>{{.PID}}</a></td>
+        <td>{{.Firstname}}</td>
+        <td>{{.Surname}}</td>
+      </tr>
+      {{- end }}
+      </table>
+    {{ else -}}
+      <p>There's nothing to see here... yet!</p>
+    {{- end }}
+{{- end }}

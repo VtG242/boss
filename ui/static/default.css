@@ -20,6 +20,11 @@ body {
 
 h1 {
     font-size: 18px;
+    padding-bottom: 8px;
+}
+h2 {
+    font-size: 17px;
+    padding-bottom: 6px;
 }
 
 a {
@@ -31,7 +36,7 @@ a:hover {
     text-decoration: underline;
 }
 
-header, nav, main, footer {
+footer, header, main, nav {
     padding: 5px calc((100% - 1024px) / 6) 5px;
 }
 
@@ -44,6 +49,26 @@ header {
     overflow: auto;
     padding-top: 15px;
     text-align: center;
+}
+
+header a {
+    border-top: 1px solid #E4E5E7;
+    border-left: 1px solid #E4E5E7;
+    border-right: 1px solid #E4E5E7;
+    display: inline-block;
+    padding: 5px 20px 11px 20px;
+    width: 250px;
+}
+header a.live {
+    background: #F7F9FA;
+    color: blue;
+    cursor: default;
+}
+header a.live:after {
+    background: #F7F9FA;
+}
+header a.live:hover {
+    text-decoration: none;
 }
 
 nav {
@@ -96,3 +121,9 @@ footer {
     text-align: center;
 }
 
+table { border-collapse: collapse; border-spacing: 0; }
+td, th { padding: 0; text-align: left; }
+table td, table th { font-size: 15px; }
+table td { padding: 6px 8px; border: solid 1px #EDEDED; vertical-align: top; }
+table th { padding: 6px 8px 8px; background-color: #283C46; border-left: solid 1px #283C46; border-right: solid 1px #283C46; border-bottom: solid 1px #283C46; color: #FFFFFF; }
+table tr:nth-child(2n) { background-color: #F9F9F9; }

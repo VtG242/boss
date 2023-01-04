@@ -10,7 +10,7 @@ import (
 	"github.com/VtG242/boss/internal/models"
 )
 
-func (app *application) help(w http.ResponseWriter, r *http.Request) {
+func (app *application) home(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		app.clientError(w, http.StatusNotFound)
 		return
@@ -22,9 +22,19 @@ func (app *application) help(w http.ResponseWriter, r *http.Request) {
 	data := app.newTemplateData(r)
 
 	// Use the new render helper.
-	app.render(w, http.StatusOK, "help.html", data)
+	app.render(w, http.StatusOK, "home.html", data)
 
 }
+
+func (app *application) playersHelp(w http.ResponseWriter, r *http.Request) {
+	// Call the newTemplateData() helper to get a templateData struct containing the 'default' data
+	data := app.newTemplateData(r)
+
+	// Use the new render helper.
+	app.render(w, http.StatusOK, "players-help.html", data)
+
+}
+
 func (app *application) players(w http.ResponseWriter, r *http.Request) {
 	players, err := app.db.Latest()
 	if err != nil {
@@ -37,7 +47,7 @@ func (app *application) players(w http.ResponseWriter, r *http.Request) {
 	data.Players = players
 
 	// Use the new render helper.
-	app.render(w, http.StatusOK, "home.html", data)
+	app.render(w, http.StatusOK, "players.html", data)
 }
 
 // Add player handler function.
