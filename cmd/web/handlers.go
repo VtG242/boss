@@ -35,8 +35,8 @@ func (app *application) playersHelp(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func (app *application) players(w http.ResponseWriter, r *http.Request) {
-	players, err := app.db.Latest()
+func (app *application) playersView(w http.ResponseWriter, r *http.Request) {
+	players, err := app.players.All()
 	if err != nil {
 		app.serverError(w, err)
 		return
@@ -60,7 +60,7 @@ func (app *application) playerView(w http.ResponseWriter, r *http.Request) {
 
 	// Use the BossModel object's Get method to retrieve the data for player id
 	// If no matching record is found, return a 404 Not Found response.
-	player, err := app.db.Get(id)
+	player, err := app.players.Get(id)
 	if err != nil {
 		if errors.Is(err, models.ErrNoRecord) {
 			app.clientError(w, http.StatusNotFound)
@@ -99,7 +99,7 @@ func (app *application) playerCreate(w http.ResponseWriter, r *http.Request) {
 	hash := "abcdef123"
 
 	// Pass the data to the Players.Insert() method, receiving the ID of the new record back.
-	id, err := app.db.Insert(surname, firstname, sex, birthdate, town, country, nickname, hash)
+	id, err := app.players.Insert(surname, firstname, sex, birthdate, town, country, nickname, hash)
 	if err != nil {
 		app.serverError(w, err)
 		return

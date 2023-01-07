@@ -22,7 +22,7 @@ type Player struct {
 }
 
 // Define a PlayerModel type which wraps a sql.DB connection pool.
-type BossModel struct {
+type PlayersModel struct {
 	Pool *sql.DB
 }
 
@@ -34,7 +34,7 @@ func GetMD5Hash(text string) string {
 }
 
 // This will insert new player into the database.
-func (db *BossModel) Insert(
+func (db *PlayersModel) Insert(
 	surname string,
 	firstname string,
 	sex string,
@@ -64,7 +64,7 @@ func (db *BossModel) Insert(
 }
 
 // This will return a specific player
-func (db *BossModel) Get(id int) (*Player, error) {
+func (db *PlayersModel) Get(id int) (*Player, error) {
 	// Initialize a pointer to a new zeroed player
 	p := &Player{}
 
@@ -83,7 +83,7 @@ func (db *BossModel) Get(id int) (*Player, error) {
 }
 
 // This will return all players
-func (db *BossModel) Latest() ([]*Player, error) {
+func (db *PlayersModel) All() ([]*Player, error) {
 	// Write the SQL statement we want to execute.
 	stmt := `Select * FROM Players`
 

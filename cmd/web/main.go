@@ -16,7 +16,7 @@ import (
 // Define app struct to keep global settings
 type application struct {
 	log       *log.Logger
-	db        *models.BossModel
+	players   *models.PlayersModel
 	templates map[string]*template.Template
 }
 
@@ -50,7 +50,7 @@ func main() {
 			Out:       os.Stderr,
 			//ReportCaller: true,
 		},
-		db: &models.BossModel{Pool: db_pool},
+		players:        &models.PlayersModel{Pool: db_pool},
 		templates: templates_cache,
 	}
 
