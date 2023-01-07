@@ -1,7 +1,9 @@
 package models
 
 import (
+	"crypto/md5"
 	"database/sql"
+	"encoding/hex"
 	"errors"
 	"time"
 )
@@ -22,6 +24,13 @@ type Player struct {
 // Define a PlayerModel type which wraps a sql.DB connection pool.
 type BossModel struct {
 	Pool *sql.DB
+}
+
+// create md5 hash from given string
+func GetMD5Hash(text string) string {
+	hasher := md5.New()
+	hasher.Write([]byte(text))
+	return hex.EncodeToString(hasher.Sum(nil))
 }
 
 // This will insert new player into the database.

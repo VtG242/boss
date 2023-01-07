@@ -125,5 +125,5 @@ table { border-collapse: collapse; border-spacing: 0; }
 td, th { padding: 0; text-align: left; }
 table td, table th { font-size: 15px; }
 table td { padding: 6px 8px; border: solid 1px #EDEDED; vertical-align: top; }
-table th { padding: 6px 8px 8px; background-color: #283C46; border-left: solid 1px #283C46; border-right: solid 1px #283C46; border-bottom: solid 1px #283C46; color: #FFFFFF; }
+table th { padding: 6px 8px 8px; background-color: rgb(54, 50, 50); border: solid 1px black; color: #FFFFFF; }
 table tr:nth-child(2n) { background-color: #F9F9F9; }
