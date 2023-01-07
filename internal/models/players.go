@@ -19,6 +19,7 @@ type Player struct {
 	Country   string
 	Nickname  string
 	Hash      string
+	Email 		sql.NullString
 }
 
 // Define a PlayerModel type which wraps a sql.DB connection pool.
@@ -69,7 +70,7 @@ func (db *PlayersModel) Get(id int) (*Player, error) {
 	p := &Player{}
 
 	err := db.Pool.QueryRow("SELECT * FROM Players WHERE pid=?", id).Scan(
-		&p.PID, &p.Surname, &p.Firstname, &p.Sex, &p.Birthdate, &p.Town, &p.Country, &p.Nickname, &p.Hash)
+		&p.PID, &p.Surname, &p.Firstname, &p.Sex, &p.Birthdate, &p.Town, &p.Country, &p.Nickname, &p.Hash, &p.Email)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, ErrNoRecord
@@ -96,7 +97,7 @@ func (db *PlayersModel) All() ([]*Player, error) {
 	}
 	defer rows.Close()
 
-	// Initialize an empty slice to hold the Snippet structs.
+	// Initialize an empty slice to hold the player structs.
 	players := []*Player{}
 
 	// Use rows.Next to iterate through the rows in the resultset. This
@@ -112,7 +113,7 @@ func (db *PlayersModel) All() ([]*Player, error) {
 		// must be pointers to the place you want to copy the data into, and the
 		// number of arguments must be exactly the same as the number of
 		// columns returned by your statement.
-		err = rows.Scan(&p.PID, &p.Surname, &p.Firstname, &p.Sex, &p.Birthdate, &p.Town, &p.Country, &p.Nickname, &p.Hash)
+		err = rows.Scan(&p.PID, &p.Surname, &p.Firstname, &p.Sex, &p.Birthdate, &p.Town, &p.Country, &p.Nickname, &p.Hash, &p.Email)
 		if err != nil {
 			return nil, err
 		}

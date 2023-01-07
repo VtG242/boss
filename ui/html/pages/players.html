@@ -11,12 +11,14 @@
         <th>ID</th>
         <th>Jméno</th>
         <th>Příjmení</th>
+        <th>Email</th>
       </tr>
       {{ range .Players -}}
       <tr>  
         <td><a href='/player/view?id={{.PID}}'>{{.PID}}</a></td>
         <td>{{.Firstname}}</td>
         <td>{{.Surname}}</td>
+        <td>{{ if .Email.Valid }}{{ .Email.String }}{{else}}  {{end}}</td>
       </tr>
       {{- end }}
       </table>
