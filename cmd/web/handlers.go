@@ -8,15 +8,10 @@ import (
 	"time"
 
 	"github.com/VtG242/boss/internal/models"
+	"github.com/julienschmidt/httprouter"
 )
 
 func (app *application) home(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/" {
-		app.clientError(w, http.StatusNotFound)
-		return
-	}
-
-	//panic("oops! something went wrong") // Deliberate panic
 
 	// Call the newTemplateData() helper to get a templateData struct containing the 'default' data
 	data := app.newTemplateData(r)
@@ -36,7 +31,8 @@ func (app *application) playersHelp(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) playersView(w http.ResponseWriter, r *http.Request) {
-	//time.Sleep(30 * time.Second) 
+	
+	//time.Sleep(30 * time.Second)
 	players, err := app.players.All()
 	if err != nil {
 		app.serverError(w, err)
@@ -53,7 +49,12 @@ func (app *application) playersView(w http.ResponseWriter, r *http.Request) {
 
 // Add player handler function.
 func (app *application) playerView(w http.ResponseWriter, r *http.Request) {
-	id, err := strconv.Atoi(r.URL.Query().Get("id"))
+
+	// When httprouter is parsing a request, the values of any named parameters will be stored in the request context
+	params := httprouter.ParamsFromContext(r.Context())
+
+	// get the value of pid
+	id, err := strconv.Atoi(params.ByName("pid"))
 	if err != nil || id < 1 {
 		app.clientError(w, http.StatusNotFound)
 		return
@@ -80,15 +81,13 @@ func (app *application) playerView(w http.ResponseWriter, r *http.Request) {
 
 }
 
+// show player form for create/edit action
+func (app *application) playerForm(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("Display the form for creating a new player..."))
+}
+
 // Add player Create handler function.
 func (app *application) playerCreate(w http.ResponseWriter, r *http.Request) {
-	// Use r.Method to check whether the request is using POST or not.
-	if r.Method != "POST" {
-		// suggest allowed method
-		w.Header().Set("Allow", "POST")
-		app.clientError(w, http.StatusMethodNotAllowed)
-		return
-	}
 
 	surname := "Testovic"
 	firstname := "Test"
@@ -106,8 +105,8 @@ func (app *application) playerCreate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Redirect the user to the relevant page for the player.
-	http.Redirect(w, r, fmt.Sprintf("/player/view?id=%d", id), http.StatusSeeOther)
+	// Redirect to page displaying newly created player
+	http.Redirect(w, r, fmt.Sprintf("/player/view/%d", id), http.StatusSeeOther)
 
 }
 
