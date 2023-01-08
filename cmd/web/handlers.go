@@ -36,6 +36,7 @@ func (app *application) playersHelp(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *application) playersView(w http.ResponseWriter, r *http.Request) {
+	//time.Sleep(30 * time.Second) 
 	players, err := app.players.All()
 	if err != nil {
 		app.serverError(w, err)

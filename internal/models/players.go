@@ -117,7 +117,7 @@ func (db *PlayersModel) All() ([]*Player, error) {
 		if err != nil {
 			return nil, err
 		}
-		// Append it to the slice of snippets.
+		// Append it to the slice of players
 		players = append(players, p)
 	}
 

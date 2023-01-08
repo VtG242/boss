@@ -1,11 +1,16 @@
 package main
 
 import (
+	"context"
 	"database/sql"
+	"errors"
 	"flag"
 	"html/template"
 	"net/http"
 	"os"
+	"os/signal"
+	"syscall"
+	"time"
 
 	"github.com/VtG242/boss/internal/models"
 
@@ -50,7 +55,7 @@ func main() {
 			Out:       os.Stderr,
 			//ReportCaller: true,
 		},
-		players:        &models.PlayersModel{Pool: db_pool},
+		players:   &models.PlayersModel{Pool: db_pool},
 		templates: templates_cache,
 	}
 
@@ -60,9 +65,32 @@ func main() {
 		Handler: app.routes(),
 	}
 
-	log.Info("Starting server on ", *addr)
-	err = srv.ListenAndServe()
-	log.Fatal(err)
+	// Run server in a goroutine so that it doesn't block.
+	log.Info("BOSS Admin server - Start listening at port ", *addr)
+	go func() {
+		if err = srv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+			// e.g. port used
+			log.Fatal(err)
+		}
+	}()
+
+	c := make(chan os.Signal, 1)
+	// We'll accept graceful shutdowns when quit via SIGINT (Ctrl+C), SIGTERM,
+	signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)
+	// Block until we receive our signal.
+	<-c
+
+	// Create a deadline to wait for shutdown
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*60)
+	defer cancel()
+	log.Warn("BOSS Admin server: Attempt to perform gracefull shutdown")
+	// Doesn't block if no connections, but will otherwise wait until the timeout deadline.
+	if err = srv.Shutdown(ctx); err != nil {
+		log.Fatal(err)
+	}
+	log.Info("BOSS Admin server: graceful shutdown performed succesufly")
+	os.Exit(0)
+
 }
 
 // The openDB() function wraps sql.Open() and returns a sql.DB connection pool
