@@ -1,6 +1,10 @@
 package main
 
-import "net/http"
+import (
+	"net/http"
+
+	"github.com/justinas/alice"
+)
 
 // The method returns http.Handler - middleware is used at the end
 func (app *application) routes() http.Handler {
@@ -22,6 +26,12 @@ func (app *application) routes() http.Handler {
 	mux.HandleFunc("/player/create", app.playerCreate)
 	mux.HandleFunc("/tournaments", app.tournaments)
 
+	// Create a middleware chain containing our 'standard' middleware
+	// which will be used for every request our application receives.
+	standard := alice.New(app.recoverPanic, app.logRequest, secureHeaders)
+
 	// using middleware chain: recoverPanic -> logRequest -> secureHeaders -> servemux -> app handler
-	return app.recoverPanic(app.logRequest(secureHeaders(mux)))
+	//return app.recoverPanic(app.logRequest(secureHeaders(mux)))
+	// Return the 'standard' middleware chain followed by the servemux.
+	return standard.Then(mux)
 }
